@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DecodeLabs — Build the Future</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── CSS Variables — 2025 DecodeLabs Palette ── */
+    :root {
+      --mocha:   #A5856F;
+      --mocha-d: #7a5f4d;
+      --mocha-l: #f2ede9;
+      --blue:    #A0D4E0;
+      --blue-d:  #4ea8c2;
+      --blue-l:  #e6f6fa;
+      --grey:    #F2F0EA;
+      --grey-d:  #b5b3ac;
+      --text:    #2b2420;
+      --text-m:  #6b5f59;
+      --white:   #ffffff;
+      --radius:  12px;
+      --nav-h:   60px;
+      --trans:   .3s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--grey);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── NAV ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid #e0dbd5;
+      height: var(--nav-h);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--mocha-d);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--blue-d); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-m);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color var(--trans);
+    }
+
+    .nav-links a:hover { color: var(--mocha-d); }
+
+    .nav-cta {
+      background: var(--mocha);
+      color: var(--white) !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      transition: background var(--trans) !important;
+    }
+
+    .nav-cta:hover { background: var(--mocha-d) !important; color: var(--white) !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform var(--trans), opacity var(--trans);
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      border-top: 1px solid #e0dbd5;
+      padding: 1rem 1.5rem 1.5rem;
+      gap: 1rem;
+    }
+
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { text-decoration: none; color: var(--text-m); font-weight: 500; font-size: 1rem; }
+    .mobile-nav .nav-cta { text-align: center; display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--mocha-l) 0%, var(--blue-l) 100%);
+      min-height: calc(100vh - var(--nav-h));
+      display: flex;
+      align-items: center;
+      padding: 4rem 1.5rem;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      gap: 3rem;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--mocha);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--mocha-d);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-m);
+      max-width: 520px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--mocha-d);
+      color: var(--white);
+      padding: 0.75rem 1.8rem;
+      border-radius: var(--radius);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background var(--trans), transform var(--trans);
+    }
+
+    .btn-primary:hover { background: var(--mocha); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--mocha-d);
+      padding: 0.75rem 1.8rem;
+      border-radius: var(--radius);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 2px solid var(--mocha);
+      cursor: pointer;
+      transition: background var(--trans), color var(--trans);
+    }
+
+    .btn-outline:hover { background: var(--mocha); color: var(--white); }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .device-mock {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(100,70,50,0.15);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .device-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .device-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #f0836f; }
+    .dot-y { background: #f5c542; }
+    .dot-g { background: #6bcb77; }
+
+    .device-screen { display: flex; flex-direction: column; gap: 10px; }
+    .dev-bar { height: 12px; background: var(--grey); border-radius: 6px; }
+    .dev-bar.w80 { width: 80%; }
+    .dev-bar.w60 { width: 60%; }
+    .dev-bar.w90 { width: 90%; }
+    .dev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+    .dev-card { background: var(--grey); border-radius: 8px; height: 70px; }
+    .dev-card.accent { background: var(--mocha-l); }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-d);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-m);
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── FEATURES ── */
+    #features { background: var(--white); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--grey);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      border: 1px solid #e5e1da;
+      transition: transform var(--trans), box-shadow var(--trans);
+    }
+
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(100,70,50,0.1); }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--mocha-l);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .feature-card p { font-size: 0.9rem; color: var(--text-m); }
+
+    /* ── CONTENT GRID ── */
+    #courses { background: var(--grey); }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .course-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid #e5e1da;
+      transition: transform var(--trans);
+    }
+
+    .course-card:hover { transform: translateY(-3px); }
+
+    .course-thumb {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .thumb-html { background: linear-gradient(135deg, #fff3e6, #ffe0c2); }
+    .thumb-css  { background: linear-gradient(135deg, #e6f6fa, #c2eaf5); }
+    .thumb-js   { background: linear-gradient(135deg, #fffde6, #fff2a0); }
+    .thumb-ux   { background: linear-gradient(135deg, #f5e6fa, #e8c2f5); }
+
+    .course-body { padding: 1.2rem; }
+
+    .course-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--mocha-d);
+      background: var(--mocha-l);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
+      display: inline-block;
+    }
+
+    .course-body h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .course-body p { font-size: 0.85rem; color: var(--text-m); margin-bottom: 1rem; }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-m);
+      border-top: 1px solid #eee;
+      padding-top: 0.8rem;
+    }
+
+    .course-badge {
+      background: var(--blue-l);
+      color: var(--blue-d);
+      font-weight: 600;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+
+    /* ── STATS ── */
+    #stats {
+      background: var(--mocha-d);
+      color: var(--white);
+      padding: 4rem 1.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-item h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-item p { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--white); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .contact-info h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-m);
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--mocha-l);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-group label { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e0dbd5;
+      border-radius: 8px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--grey);
+      transition: border-color var(--trans);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--mocha); background: var(--white); }
+
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.7);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.875rem;
+    }
+
+    footer .foot-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    footer a { color: var(--blue); text-decoration: none; }
+
+    /* ── TABLET ── */
+    @media (min-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr 1fr; align-items: center; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .content-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 1024px) {
+      .nav-links { display: flex; }
+      .hamburger { display: none; }
+      .features-grid { grid-template-columns: repeat(3, 1fr); }
+      .content-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 1023px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--mocha-d);
+      color: var(--white);
+      padding: 0.8rem 1.6rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: transform 0.4s ease;
+      z-index: 999;
+    }
+
+    #toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <header>
+    <nav>
+      <a href="#" class="logo">Decode<span>Labs</span></a>
+      <ul class="nav-links">
+        <li><a href="#features">Why Us</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#stats">Impact</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact" class="nav-cta">Get Started</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#features">Why Us</a>
+      <a href="#courses">Courses</a>
+      <a href="#stats">Impact</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-cta btn-primary">Get Started</a>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div>
+        <span class="hero-tag">🚀 Batch 2026 is Live</span>
+        <h1>Build the <em>Future</em><br>of the Web</h1>
+        <p>Step into your Full Stack Developer role at DecodeLabs. Master responsive interfaces, semantic HTML, and modern CSS — before you ever touch a backend.</p>
+        <div class="hero-btns">
+          <a href="#courses" class="btn-primary">Explore Projects</a>
+          <a href="#features" class="btn-outline">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="device-mock">
+          <div class="device-bar">
+            <div class="device-dot dot-r"></div>
+            <div class="device-dot dot-y"></div>
+            <div class="device-dot dot-g"></div>
+          </div>
+          <div class="device-screen">
+            <div class="dev-bar w80"></div>
+            <div class="dev-bar w60"></div>
+            <div class="dev-bar w90"></div>
+            <div class="dev-grid">
+              <div class="dev-card accent"></div>
+              <div class="dev-card"></div>
+              <div class="dev-card"></div>
+              <div class="dev-card accent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section id="features">
+    <div class="container">
+      <p class="section-label">Why DecodeLabs</p>
+      <h2 class="section-title">Three Pillars of Craft</h2>
+      <p class="section-sub">Every project at DecodeLabs is built on strategy, visual design, and solid implementation — no shortcuts.</p>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🗺️</div>
+          <h3>Strategy & Blueprint</h3>
+          <p>Start with empathy maps and low-fidelity wireframes. If it doesn't work in grayscale, color won't fix it.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🎨</div>
+          <h3>Visual Design 2025</h3>
+          <p>Warm Mocha Mousse palette, Montserrat headlines, Roboto body — grounded aesthetics that convert.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">⚙️</div>
+          <h3>Mobile-First Code</h3>
+          <p>Semantic HTML5 landmarks, CSS Grid macro layouts, Flexbox micro components — no frameworks, pure mastery.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">♿</div>
+          <h3>Accessibility First</h3>
+          <p>Strict WCAG adherence. Semantic integrity means your code is readable by both AI and screen readers.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📐</div>
+          <h3>Responsive Architecture</h3>
+          <p>Single column on mobile, expand at 768px tablet and 1024px desktop via min-width media queries.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🔍</div>
+          <h3>Performance Audit</h3>
+          <p>LCP, CLS, and accessibility scoring built into the final phase — ship code that passes real-world checks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COURSES / CONTENT GRID ── -->
+  <section id="courses">
+    <div class="container">
+      <p class="section-label">Content Grid</p>
+      <h2 class="section-title">Project 1 Modules</h2>
+      <p class="section-sub">Four core areas to master before you move to backend — each verified for quality before unlock.</p>
+      <div class="content-grid">
+        <article class="course-card reveal">
+          <div class="course-thumb thumb-html">🏗️</div>
+          <div class="course-body">
+            <span class="course-tag">Foundation</span>
+            <h3>Semantic HTML5</h3>
+            <p>header, nav, main, article, footer — landmarks that power SEO and screen readers.</p>
+            <div class="course-meta">
+              <span>⏱ 3 hrs</span>
+              <span class="course-badge">Mandatory</span>
+            </div>
+          </div>
+        </article>
+        <article class="course-card reveal">
+          <div class="course-thumb thumb-css">🎨</div>
+          <div class="course-body">
+            <span class="course-tag">Styling</span>
+            <h3>CSS Grid & Flexbox</h3>
+            <p>Macro layouts with Grid, micro components with Flexbox, fluid type with clamp().</p>
+            <div class="course-meta">
+              <span>⏱ 4 hrs</span>
+              <span class="course-badge">Core</span>
+            </div>
+          </div>
+        </article>
+        <article class="course-card reveal">
+          <div class="course-thumb thumb-js">⚡</div>
+          <div class="course-body">
+            <span class="course-tag">Logic</span>
+            <h3>Vanilla JavaScript</h3>
+            <p>State management, DOM interaction, toggle menus, form validation — no frameworks.</p>
+            <div class="course-meta">
+              <span>⏱ 3 hrs</span>
+              <span class="course-badge">Core</span>
+            </div>
+          </div>
+        </article>
+        <article class="course-card reveal">
+          <div class="course-thumb thumb-ux">🔍</div>
+          <div class="course-body">
+            <span class="course-tag">Audit</span>
+            <h3>Accessibility & LCP</h3>
+            <p>WCAG audit, Lighthouse LCP/CLS scores, ARIA roles — ship what actually works.</p>
+            <div class="course-meta">
+              <span>⏱ 2 hrs</span>
+              <span class="course-badge">Final Step</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <h2 id="c1">0</h2>
+        <p>Interns Trained</p>
+      </div>
+      <div class="stat-item reveal">
+        <h2 id="c2">0</h2>
+        <p>Projects Completed</p>
+      </div>
+      <div class="stat-item reveal">
+        <h2 id="c3">0</h2>
+        <p>Hiring Partners</p>
+      </div>
+      <div class="stat-item reveal">
+        <h2 id="c4">0</h2>
+        <p>Satisfaction Rate</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Ready to Build?</h2>
+      <p class="section-sub">Open your IDE, initialise the repo, and begin with the blueprint. Or reach out to DecodeLabs directly.</p>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>DecodeLabs HQ</h3>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <span>Greater Lucknow, India</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <span>+91 89330 06408</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <span>decodelabs.tech@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🌐</div>
+            <span>www.decodelabs.tech</span>
+          </div>
+        </div>
+        <div>
+          <div class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell us about your project or question..."></textarea>
+            </div>
+            <button class="btn-primary" id="send-btn" style="align-self:flex-start;">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p class="foot-logo">Decode<span style="color:var(--blue)">Labs</span></p>
+    <p>Full Stack Development · Batch 2026 · <a href="mailto:decodelabs.tech@gmail.com">decodelabs.tech@gmail.com</a></p>
+    <p style="margin-top:0.5rem; font-size:0.8rem; opacity:0.5;">Built with HTML5 · CSS3 · Vanilla JS · No Frameworks</p>
+  </footer>
+
+  <div id="toast">✅ Message sent! We'll be in touch soon.</div>
+
+  <script>
+    /* ── Hamburger menu ── */
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    /* ── Scroll Reveal ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    /* ── Counter animation ── */
+    function animateCounter(el, target, suffix = '', duration = 1800) {
+      let start = 0;
+      const step = target / (duration / 16);
+      const tick = () => {
+        start = Math.min(start + step, target);
+        el.textContent = Math.round(start) + suffix;
+        if (start < target) requestAnimationFrame(tick);
+      };
+      tick();
+    }
+
+    const statsSection = document.getElementById('stats');
+    let counted = false;
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !counted) {
+        counted = true;
+        animateCounter(document.getElementById('c1'), 500, '+');
+        animateCounter(document.getElementById('c2'), 1200, '+');
+        animateCounter(document.getElementById('c3'), 40, '+');
+        animateCounter(document.getElementById('c4'), 98, '%');
+      }
+    }, { threshold: 0.3 });
+
+    statsObserver.observe(statsSection);
+
+    /* ── Contact form ── */
+    const sendBtn = document.getElementById('send-btn');
+    const toast   = document.getElementById('toast');
+
+    sendBtn.addEventListener('click', () => {
+      const name  = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg   = document.getElementById('message').value.trim();
+
+      if (!name || !email || !msg) {
+        toast.textContent = '⚠️ Please fill in all fields.';
+        toast.style.background = '#c0392b';
+      } else {
+        toast.textContent = '✅ Message sent! We\'ll be in touch soon.';
+        toast.style.background = 'var(--mocha-d)';
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('message').value = '';
+      }
+
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    });
+  </script>
+
+</body>
+</html>
